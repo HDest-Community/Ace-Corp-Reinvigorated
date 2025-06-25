@@ -1,0 +1,35 @@
+// Redline
+Code:
+- Accensus
+
+Sprites:
+- tan da (https://www.artstation.com/artwork/oAJ9lz)
+ + Pickup sprite and reshade by Mor'ladim.
+
+Sounds:
+- Fallout (Interplay/Bethesda), compiled by Magmacow
+ + https://gamebanana.com/sounds/35140 (Reloading)
+ + https://gamebanana.com/sounds/33348 (Fire/Bolt)
+
+Feedback:
+- Massive thanks to Eric and Daerik for their feedback on all of the iterations.
+
+// PSG
+Code:
+- Accensus
+
+Sprites:
+- Conveniently taken from Russian Overkill.
+
+Sounds:
+- Conveniently taken from Bullet-Eye.
+
+Idea:
+- LSWraith
+
+// Rearview Mirror
+Code:
+- Accensus
+
+Sprites:
+- Mor'ladim

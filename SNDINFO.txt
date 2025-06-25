@@ -1,0 +1,44 @@
+// Redline
+Greenline/Fire GDLNFIRE
+$pitchset Greenline/Fire 0.9;
+
+Greenline/Impact GDLNHIT
+$limit Greenline/Impact 0
+
+Greenline/BoltBack GDBOLTBK
+
+Greenline/BoltFwd GDBOLTFW
+
+Greenline/CellIn GDCLLIN
+Greenline/CellOut GDCLLOUT
+Greenline/Eject GDEJECT
+Greenline/Overload GDOVERLD
+Greenline/Charge GDBOLTCH
+$alias Greenline/Overheated Greenline/Charge
+
+Greenline/LockOn GDLLOCK
+
+// PSG
+
+OPSG/Adjust PZGADJST
+OPSG/Toggle PZGTOGGL
+$volume OPSG/Toggle 0.5
+
+// Majestic
+
+OMajestic/Fire1 "Sounds/OldMajesticFire1.wav"
+OMajestic/Fire2 "Sounds/OldMajesticFire1.wav"
+OMajestic/Fire3 "Sounds/OldMajesticFire1.wav"
+$random OMajestic/Fire
+{
+	OMajestic/Fire1
+	OMajestic/Fire2
+	OMajestic/Fire3
+}
+
+OMajestic/MagOut "Sounds/OldMajesticMagOut.wav"
+OMajestic/MagIn "Sounds/OldMajesticMagIn.wav"
+OMajestic/Eject "Sounds/OldMajesticMagEject.wav"
+OMajestic/Charge "Sounds/OldMajesticCharge.ogg"
+$alias OMajestic/BatteryOut weapons/plasopen
+$alias OMajestic/BatteryIn weapons/plasclose2

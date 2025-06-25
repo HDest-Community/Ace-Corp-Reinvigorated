@@ -1,0 +1,23 @@
+// SPAWNING
+
+// Old Majestic
+addSpawnTableSingleEntry => { "tableName": "PistolReplaces", "name": "OldMajesticRandom", "weight": "#oldmaj_spawn_weight", "persists": "#oldmaj_spawn_persistency" }
+addSpawnTableSingleEntry => { "tableName": "SuperShotgunReplaces", "name": "OldMajesticRandom", "weight": "#oldmaj_spawn_weight", "persists": "#oldmaj_spawn_persistency" }
+addSpawnTableSingleEntry => { "tableName": "ShotgunReplaces", "name": "OldMajesticRandom", "weight": "#oldmaj_spawn_weight", "persists": "#oldmaj_spawn_persistency" }
+
+// Old Redline
+addSpawnTableSingleEntry => { "tableName": "PlasmaRifleReplaces", "name": "HDGreenline", "weight": "#oldrdl_spawn_weight", "persists": "#oldrdl_spawn_persistency" }
+addSpawnTableSingleEntry => { "tableName": "SuperShotgunReplaces", "name": "HDGreenline", "weight": "#oldrdl_spawn_weight", "persists": "#oldrdl_spawn_persistency" }
+
+// Old PSG
+addSpawnTableSingleEntry => { "tableName": "BlueArmorReplaces", "name": "OldPsgRandom", "weight": "#oldpsg_spawn_bias", "persists": "#oldpsg_spawn_persistency" }
+
+// AMMO CLASSIFICATION
+addAmmoUser => { "ammoName": "HDBattery", "name": "HDGreenline" }
+addAmmoUser => { "ammoName": "HDBattery", "name": "HDOldPersonalShieldGenerator" }
+addAmmoUser => { "ammoName": "HD500SWLightAmmo", "name": "HDOldMajestic" }
+
+// BACKPACK FILTERING
+addBPSpawnPoolFilter => { "name": "HDOldMajestic", "allowed": "#oldmaj_allowBackpacks" }
+addBPSpawnPoolFilter => { "name": "HDGreenline", "allowed": "#oldrdl_allowBackpacks" }
+addBPSpawnPoolFilter => { "name": "HDOldPersonalShieldGenerator", "allowed": "#oldpsg_allowBackpacks" }

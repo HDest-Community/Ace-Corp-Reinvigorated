@@ -1,0 +1,7 @@
+Model GreenlineRaySegment
+{
+	USEACTORPITCH
+	DONTCULLBACKFACES
+	Path "Models" DONTCULLBACKFACES Scale 3.333333 1.0 1.0
+	Model 0 "RedlineRaySegment.obj" FrameIndex RDLR A 0 0
+}

@@ -1,0 +1,154 @@
+
+class HDOldRearviewMirror : HDWeapon
+{
+    enum RearviewMirrorProperties
+    {
+        RVMProp_Flags
+    }
+
+    override Inventory CreateTossable(int amt)
+    {
+        if (Camera)
+        {
+            Camera.Destroy();
+        }
+
+        return Super.CreateTossable(amt);
+    }
+    override bool AddSpareWeapon(actor newowner) { return AddSpareWeaponRegular(newowner); }
+    override HDWeapon GetSpareWeapon(actor newowner, bool reverse, bool doselect) { return GetSpareWeaponRegular(newowner, reverse, doselect); }
+    override double GunMass() { return 1; }
+    override double WeaponBulk() { return 10; }
+    override string, double GetPickupSprite() { return "RVMGZ0", 0.52; }
+    override string GetHelpText()
+    {
+        return WEPHELP_ALTRELOAD.."  Switch hands";
+    }
+
+    override void DrawSightPicture(HDStatusBar sb, HDWeapon hdw, HDPlayerPawn hpl, bool sightbob, vector2 bob, double fov, bool scopeview, actor hpc, string whichdot)
+    {
+        if (Camera)
+        {
+            TexMan.SetCameraToTexture(Camera, "HDMRRCAM", 90);
+            sb.DrawImage("HDMRRCAM", (0, -1) + bob, sb.DI_SCREEN_CENTER | sb.DI_ITEM_CENTER, scale: (0.2, 0.2));
+            sb.DrawImage("RVMRROR", bob, sb.DI_SCREEN_CENTER | sb.DI_ITEM_CENTER, scale: (2.0, 2.0));
+        }
+    }
+
+    private HDOldRearviewCamera Camera;
+    private bool WrongHand;
+
+    Default
+    {
+        +INVENTORY.INVBAR
+        +WEAPON.WIMPY_WEAPON
+        +HDWEAPON.FITSINBACKPACK
+        Weapon.SelectionOrder 300;
+        HDWeapon.BarrelSize 40, 1, 1;
+        Inventory.PickupMessage "You picked up a rearview mirror. Despite everything, you're still lookin' good.";
+        Inventory.PickupSound "weapons/pocket";
+        Inventory.Icon "RVMGZ0";
+        Scale 0.28;
+        Tag "Rearview mirror";
+        HDWeapon.Refid "orv";
+    }
+
+    States
+    {
+        Spawn:
+            RVMG Z -1;
+            Stop;
+        Ready:
+            RVMG # 1
+            {
+                if (!invoker.Camera)
+                {
+                    invoker.Camera = HDOldRearviewCamera(Spawn("HDOldRearviewCamera", pos));
+                    invoker.Camera.master = self;
+                    invoker.Camera.Tick();
+                    invoker.Camera.WrongHand = invoker.WrongHand;
+                }
+
+                A_WeaponReady(WRF_ALLOWUSER3 | WRF_ALLOWUSER1 | WRF_NOFIRE);
+            }
+            Goto ReadyEnd;
+        Select0:
+            RVMG # 0 { player.GetPSprite(PSP_WEAPON).frame = invoker.WrongHand ? 1 : 0; }
+            Goto Select0Small;
+        Deselect0:
+            RVMG # 0
+            {
+                if (invoker.Camera)
+                {
+                    invoker.Camera.Destroy();
+                }
+                player.GetPSprite(PSP_WEAPON).frame = invoker.WrongHand ? 1 : 0;
+            }
+            Goto Deselect0Small;
+        User3:
+            RVMG # 0 A_SelectWeapon("PickupManager");
+            Goto Ready;
+        AltReload:
+            RVMG # 0
+            {
+                if (invoker.Camera)
+                {
+                    invoker.Camera.Destroy();
+                }
+            }
+            RVMG # 1 Offset(0, 36);
+            RVMG # 1 Offset(0, 42);
+            RVMG # 1 Offset(0, 50);
+            RVMG # 1 Offset(0, 60);
+            RVMG # 1 Offset(0, 74);
+            RVMG # 1 Offset(0, 90);
+            RVMG # 1 Offset(0, 120);
+            RVMG # 0
+            {
+                invoker.WrongHand = !invoker.WrongHand;
+                player.GetPSprite(PSP_WEAPON).frame = invoker.WrongHand ? 1 : 0;
+            }
+            RVMG # 1 Offset(0, 90);
+            RVMG # 1 Offset(0, 74);
+            RVMG # 1 Offset(0, 60);
+            RVMG # 1 Offset(0, 50);
+            RVMG # 1 Offset(0, 42);
+            RVMG # 1 Offset(0, 36);
+            RVMG # 1 Offset(0, 32);
+            Goto Nope;
+    }
+}
+
+class HDOldRearviewCamera : Actor
+{
+    override void Tick()
+    {
+        if (!master || master.Health <= 0)
+        {
+            Destroy();
+            return;
+        }
+
+        Warp(master, (master.radius + 24) * cos(pitch), WrongHand ? -6 : 6, master.height * 0.80 + 32 * sin(-master.pitch), flags: WARPF_NOCHECKPOSITION | WARPF_INTERPOLATE);
+        angle = (master.angle - 180) + (Wronghand ? -15 : 15);
+        pitch = -master.pitch;
+
+        Super.Tick();
+    }
+
+    bool WrongHand;
+
+    Default
+    {
+        +SEEINVISIBLE 
+        // [Ace] So it doesn't spaz out if the player is invisible, although the mirror won't even show up to begin with.
+        +NOINTERACTION
+    }
+
+    // States
+    // {
+    // 	Spawn:
+    // 		BAL2 A -1;
+    // 		Stop;
+    // }
+}
