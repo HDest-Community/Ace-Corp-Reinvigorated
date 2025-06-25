@@ -1,0 +1,2 @@
+cameratexture REDLNCAM 96 56
+cameratexture HDMRRCAM 1100 540

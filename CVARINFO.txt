@@ -1,0 +1,15 @@
+user bool psg_invert = false;
+
+// HDCINFO CVars
+
+server float oldmaj_spawn_weight = 0;
+server bool oldmaj_spawn_persistency = false;
+server bool oldmaj_allowBackpacks = false;
+
+server float oldrdl_spawn_weight = 0;
+server bool oldrdl_spawn_persistency = false;
+server bool oldrdl_allowBackpacks = false;
+
+server float oldpsg_spawn_weight = 0;
+server bool oldpsg_spawn_persistency = false;
+server bool oldpsg_allowBackpacks = false;
