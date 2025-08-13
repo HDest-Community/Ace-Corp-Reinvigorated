@@ -231,7 +231,7 @@ class HDOldPersonalShieldGenerator : HDWeapon
 		Inventory.Icon "PZGNA0";
 		Inventory.PickupSound "weapons/pocket";
 		Inventory.PickupMessage "You picked up a personal shield generator.";
-		Tag "Personal Shield Generator";
+		Tag "$TAG_PZG";
 		HDWeapon.RefId "pzg";
 		Scale 0.35;
         

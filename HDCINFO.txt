@@ -21,3 +21,16 @@ addAmmoUser => { "ammoName": "HD500SWLightAmmo", "name": "HDOldMajestic" }
 addBPSpawnPoolFilter => { "name": "HDOldMajestic", "allowed": "#oldmaj_allowBackpacks" }
 addBPSpawnPoolFilter => { "name": "HDGreenline", "allowed": "#oldrdl_allowBackpacks" }
 addBPSpawnPoolFilter => { "name": "HDOldPersonalShieldGenerator", "allowed": "#oldpsg_allowBackpacks" }
+
+// WEAPON CRATE FILTERING
+addWeaponCrateFilter => { "name": "HDOldMajestic", "allowed": "#oldmaj_allowBackpacks" }
+addWeaponCrateFilter => { "name": "HDGreenline", "allowed": "#oldrdl_allowBackpacks" }
+
+// MERCHANT
+newMerchantStoreItem => { "enabled": "#acriv_merch_greenline", "type": "weapon", "category": "$ACRIV_CAT", "item": "HDGreenline", "icon": "RDSGZ0", "displayName": "$TAG_GREENLINE", "basePrice": "500", "flavorText": "$ACRIVFLAVOR_GREENLINE" }
+newMerchantStoreItem => { "enabled": "#acriv_merch_modest", "type": "weapon", "category": "$ACRIV_CAT", "item": "HDOldMajestic", "icon": "OMJGZ0", "displayName": "$TAG_MODEST", "basePrice": "390", "flavorText": "$ACRIVFLAVOR_MODEST" }
+
+newMerchantStoreItem => { "enabled": "#acriv_merch_pzg", "type": "item", "category": "$ACRIV_CAT", "item": "HDOldPersonalShieldGenerator", "icon": "PZGNA0", "displayName": "$TAG_PZG", "basePrice": "1200", "flavorText": "$ACRIVFLAVOR_PZG" }
+newMerchantStoreItem => { "enabled": "#acriv_merch_hindsight", "type": "item", "category": "$ACRIV_CAT", "item": "HDOldRearviewMirror", "icon": "RVMGZ0", "displayName": "$TAG_REARWARDMIRROR", "basePrice": "69", "flavorText": "$ACRIVFLAVOR_HINDSIGHT" }
+
+newMerchantStoreItem => { "enabled": "#acriv_merch_modest", "type": "mag", "category": "$ACRIV_CAT", "item": "HDOldMajesticMag", "icon": "OMJMA0", "displayName": "$TAG_MODESTMAG", "basePrice": "7", "flavorText": "$ACRIVFLAVOR_MODESTMAG" }
