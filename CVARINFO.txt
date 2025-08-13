@@ -13,3 +13,8 @@ server bool oldrdl_allowBackpacks = false;
 server float oldpsg_spawn_weight = 0;
 server bool oldpsg_spawn_persistency = false;
 server bool oldpsg_allowBackpacks = false;
+
+server bool acriv_merch_greenline = true;
+server bool acriv_merch_modest = true;
+server bool acriv_merch_pzg = true;
+server bool acriv_merch_hindsight = true;

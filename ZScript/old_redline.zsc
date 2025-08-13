@@ -234,7 +234,7 @@ class HDGreenline : HDCellWeapon
 		Weapon.SlotPriority 1.5;
 		HDWeapon.BarrelSize 35, 1.5, 2;
 		Scale 0.6;
-		Tag "RDL-N3 'Greenline' Thermal Lance";
+		Tag "$TAG_GREENLINE";
 		HDWeapon.Refid "gdl";
         
         HDWeapon.loadoutcodes "
@@ -529,7 +529,7 @@ class GreenlineRayImpact : HDActor
 		+NOBLOOD
 		+HITTRACER
 		Decal "GreenlineScorch";
-		DamageType "Hot";
+		DamageType "Electrical";
 	}
 
 	States

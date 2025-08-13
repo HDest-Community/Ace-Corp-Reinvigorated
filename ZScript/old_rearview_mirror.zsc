@@ -49,7 +49,7 @@ class HDOldRearviewMirror : HDWeapon
         Inventory.PickupSound "weapons/pocket";
         Inventory.Icon "RVMGZ0";
         Scale 0.28;
-        Tag "Rearview mirror";
+        Tag "$TAG_REARWARDMIRROR";
         HDWeapon.Refid "orv";
     }
 

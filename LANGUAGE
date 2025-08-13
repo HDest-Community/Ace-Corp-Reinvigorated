@@ -1,0 +1,20 @@
+[enu default]
+
+// Weapons
+TAG_GREENLINE = "RDL-N3 'Greenline' Thermal Lance";
+TAG_MODEST = "'Modest' railgun revolver";
+
+TAG_PZG = "Perzonal Zhield Ghenerator";
+TAG_REARWARDMIRROR = "Hindsight Mirror";
+
+TAG_MODESTMAG = "'Modest' magazine";
+
+// Merchant
+ACRIV_CAT = "AceCorp";
+ACRIVFLAVOR_GREENLINE = "A mean, green, legally distinct killing machine! That's also not green! Despite the name!";
+ACRIVFLAVOR_MODEST = "Still hits hard, despite its age! May not be as virile as the old days though.";
+
+ACRIVFLAVOR_PZG = "Don't look too hard at the label. Still works perfectly fine. I hope.";
+ACRIVFLAVOR_HINDSIGHT = "Forethought not included.";
+
+ACRIVFLAVOR_MODESTMAG = "Not so Majestic now, aye?";
