@@ -1,0 +1,100 @@
+class OldMassRecallSpell : OldArcanumSpell
+{
+	override int GetIndex() { return 90; }
+	override class<OldArcanumSpellTree> GetTree() { return 'OldArcanumTreeAlteration'; }
+	override string GetName() { return "Mass Recall"; }
+	override int GetSpellType() { return SType_SelfOrMass; }
+	override int, int GetCastRequirements() { return 300, 0; }
+	override string GetDescription() { return "Teleports all players, dead or alive, to the circle."; }
+	override string GetTechnicalInfo() { return "Mass"; }
+	override int GetMaxLevel() { return 1; }
+	override class<OldArcanumSigil> GetSigil() { return 'OldMassRecallSigil'; }
+}
+
+class OldMassRecallSigil : OldArcanumSigil
+{
+	override void ActivateSelfOrMass()
+	{
+		bool HasPlayedSound;
+		int AngOff = 0;
+		for (int i = 0; i < MAXPLAYERS; ++i)
+		{
+			if (!players[i].mo || players[i].mo == master)
+			{
+				continue;
+			}
+
+			let plr = players[i].mo;
+			if (plr.Health > 0)
+			{
+				if (!HasPlayedSound)
+				{
+					PlayCastSound(self, "Arcanum/Alteration/MassRecall");
+					HasPlayedSound = true;
+				}
+				plr.Warp(master, 32, 0, 0, AngOff, flags: WARPF_NOCHECKPOSITION);
+				plr.A_StartSound("misc/teleport", 20);
+				AngOff += 45;
+			}
+		}
+
+		if (hd_pof)
+		{
+			ThinkerIterator it = ThinkerIterator.Create("HDPlayerCorpse", STAT_DEFAULT);
+			HDPlayerCorpse PCorpse;
+			while ((PCorpse = HDPlayerCorpse(it.Next())))
+			{
+				if (!HasPlayedSound)
+				{
+					PlayCastSound(self, "Arcanum/Alteration/MassRecall");
+					HasPlayedSound = true;
+				}
+				PCorpse.Warp(master, 32, 0, 0, AngOff, flags: WARPF_NOCHECKPOSITION);
+				PCorpse.A_StartSound("misc/teleport", 20);
+				AngOff += 45;
+			}
+		}
+
+		Name FollowerCls = 'HDFollower';
+		ThinkerIterator it = ThinkerIterator.Create(FollowerCls, STAT_DEFAULT);
+		Actor flw;
+		while ((flw = Actor(it.Next())))
+		{
+			if (!HasPlayedSound)
+			{
+				PlayCastSound(self, "Arcanum/Alteration/MassRecall");
+				HasPlayedSound = true;
+			}
+			flw.Warp(master, 32, 0, 0, AngOff, flags: WARPF_NOCHECKPOSITION);
+			flw.A_StartSound("misc/teleport", 20);
+			AngOff += 45;
+		}
+	}
+
+	override void InitRuneSlots()
+	{
+		vector2 Size = (3, 5);
+		double X = 27.9, Y = 0;
+		CreateRuneSlot((-X, Y), Size, 0.85); CreateRuneSlot((X, Y), Size, 0.85);
+
+		Size = (4.2, 7);
+		X = 8.85; Y = 17.14;
+		CreateRuneSlot((-X, Y), Size, 1.4); CreateRuneSlot((X, Y), Size, 1.4);
+		CreateRuneSlot((-X, -Y), Size, 1.4); CreateRuneSlot((X, -Y), Size, 1.4);
+	}
+
+	Default
+	{
+		OldArcanumSigil.AddAlpha 0.7;
+		Height 44;
+		Radius 50;
+		StencilColor "22DDFF";
+	}
+
+	States
+	{
+		Spawn:
+			CRAL J 0;
+			Goto Super::Spawn;
+	}
+}

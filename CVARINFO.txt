@@ -1,4 +1,7 @@
 user bool psg_invert = false;
+server bool oldarcanum_debug = false;
+user int oldarcanum_invert = 0;
+user bool oldarcanum_zoomhold = false;
 
 // HDCINFO CVars
 

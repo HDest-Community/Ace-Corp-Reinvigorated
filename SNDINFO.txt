@@ -42,3 +42,42 @@ OMajestic/Eject "Sounds/OldMajesticMagEject.wav"
 OMajestic/Charge "Sounds/OldMajesticCharge.ogg"
 $alias OMajestic/BatteryOut weapons/plasopen
 $alias OMajestic/BatteryIn weapons/plasclose2
+
+Arcanum/Sigil/Spawn ARSIGSPW
+$limit Arcanum/Sigil/Spawn 0
+
+Arcanum/Rune/Spawn ARRUNSPW
+
+Arcanum/Destruction/Immolation "Sounds/Destruction/Immolation.wav"
+Arcanum/Destruction/Claymore "Sounds/Destruction/Claymore.wav"
+Arcanum/Destruction/Hammerfist "Sounds/Destruction/Hammerfist.wav"
+Arcanum/Destruction/Voidstorm/Start "Sounds/Destruction/VoidstormStart.wav"
+Arcanum/Destruction/Voidstorm/Loop "Sounds/Destruction/VoidstormLoop.wav"
+$limit Arcanum/Destruction/Voidstorm/Loop 0
+
+Arcanum/Restoration/Convalescence "Sounds/Restoration/Convalescence.wav"
+Arcanum/Restoration/LifeForce "Sounds/Restoration/LifeForce.wav"
+Arcanum/Restoration/Rage "Sounds/Restoration/Rage.wav"
+$pitchset Arcanum/Restoration/Rage 0.7
+
+Arcanum/Restoration/Transfusion "Sounds/Restoration/Transfusion.wav"
+Arcanum/Restoration/Resurrect "Sounds/Restoration/Resurrect.wav"
+Arcanum/Restoration/SoulGuard "Sounds/Restoration/SoulGuard.wav"
+Arcanum/Restoration/Revitalization "Sounds/Restoration/Revitalization.wav"
+
+Arcanum/Alteration/FarReach "Sounds/Alteration/FarReach.wav"
+Arcanum/Alteration/Worldbreaker "Sounds/Alteration/Worldbreaker.wav"
+Arcanum/Alteration/Haste "Sounds/Alteration/Haste.wav"
+Arcanum/Alteration/HoradricMalus "Sounds/Alteration/HoradricMalus.wav"
+Arcanum/Alteration/Feather "Sounds/Alteration/Feather.wav"
+Arcanum/Alteration/Reenergize "Sounds/Alteration/Reenergize.wav"
+Arcanum/Alteration/Displacement/Start "Sounds/Alteration/DisplacementStart.wav"
+Arcanum/Alteration/Displacement/End "Sounds/Alteration/DisplacementEnd.wav"
+Arcanum/Alteration/StoneFlesh "Sounds/Alteration/StoneFlesh.wav"
+Arcanum/Alteration/MassRecall "Sounds/Alteration/MassRecall.wav"
+
+$alias Arcanum/Conjuration/GhostSquad misc/p_pkup
+Arcanum/Conjuration/HolyForce "Sounds/Conjuration/HolyForce.wav"
+Arcanum/Conjuration/Barrier "Sounds/Conjuration/Barrier.wav"
+$alias Arcanum/Conjuration/Bridge Arcanum/Conjuration/Barrier
+Arcanum/Conjuration/Candlelight "Sounds/Conjuration/Candlelight.wav"

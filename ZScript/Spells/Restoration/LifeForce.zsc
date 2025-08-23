@@ -1,0 +1,97 @@
+class OldLifeForceSpell : OldArcanumSpell
+{
+	override int GetIndex() { return 10; }
+	override class<OldArcanumSpellTree> GetTree() { return 'OldArcanumTreeRestoration'; }
+	override string GetName() { return "Life Force"; }
+	override int GetSpellType() { return SType_SelfOrMass | SType_Targeted; }
+	override int, int GetCastRequirements() { return 250, 0; }
+	override string GetDescription() { return String.Format("Fixes all wounds and restores 35%% of missing health. Heals \c[Gold]%i\c- burns. Reduces aggro by \c[Gold]%i\c-. Restores lost blood and removes incap, but only for others.", 25 * Level, 10 * Level); }
+	override string GetTechnicalInfo() { return "Self, Targeted, Touch"; }
+	override int GetExperienceGain() { return 2; }
+	override class<OldArcanumSigil> GetSigil() { return 'OldLifeForceSigil'; }
+}
+
+class OldLifeForceSigil : OldArcanumSigil
+{
+	override void ActivateTargeted()
+	{
+		Actor a = AimTarget();
+		if (a && a.Health > 0 && Distance3D(a) <= HDCONST_ONEMETRE * 2)
+		{
+			DoHealing(a);
+		}
+	}
+
+	override void ActivateSelfOrMass()
+	{
+		if (master)
+		{
+			DoHealing(master);
+		}
+	}
+
+	private void DoHealing(Actor a)
+	{
+		let plr = HDPlayerPawn(a);
+		let mon = HDMobBase(a);
+		bool Boosted = a.CheckInventory('OldConvalescenceEffect', 1);
+		if (plr)
+		{
+			PlayCastSound(self, "Arcanum/Restoration/LifeForce");
+			//plr.unstablewoundcount = 0;
+			plr.oldwoundcount = 0;
+			//plr.woundcount = 0;
+			plr.burncount -= (Boosted ? 35 : 25) * SigilLevel;
+			plr.aggravateddamage -= (Boosted ? 15 : 10) * SigilLevel;
+			if (a != master)
+			{
+				plr.bloodloss = 0;
+				plr.incaptimer = 0;
+			}
+			int MissingHealth = plr.default.Health - plr.Health;
+			plr.GiveBody(int(MissingHealth * (Boosted ? 0.70 : 0.35)));
+		}
+		else if (mon)
+		{
+			PlayCastSound(self, "Arcanum/Restoration/LifeForce");
+			mon.stunned = 0;
+			mon.bodydamage = 0; // [Ace] Eh, why not?
+			mon.bloodloss = 0;
+			int MissingHealth = mon.SpawnHealth() - mon.Health;
+			mon.GiveBody(int(MissingHealth * (Boosted ? 0.70 : 0.35)));
+
+			// [Ace] Stop bleeding.
+			ThinkerIterator it = ThinkerIterator.Create("HDBleedingWound", STAT_DEFAULT);
+			HDBleedingWound BleedThinker;
+			while ((BleedThinker = HDBleedingWound(it.Next())))
+			{
+				if (BleedThinker.bleeder == mon)
+				{
+					BleedThinker.Destroy();
+				}
+			}
+		}
+	}
+
+	override void InitRuneSlots()
+	{
+		vector2 BigSize = (4, 6.66);
+		vector2 SmallSize = (3, 5);
+		CreateRuneSlot((-9.3, 16.5), SmallSize, 0.9); CreateRuneSlot((9.3, 16.5), SmallSize, 0.9);
+		CreateRuneSlot((-17, 0), BigSize, 1.2); CreateRuneSlot((17, 0), BigSize, 1.2);
+		CreateRuneSlot((-9.3, -16.5), SmallSize, 0.9); CreateRuneSlot((9.3, -16.5), SmallSize, 0.9);
+	}
+
+	Default
+	{
+		OldArcanumSigil.FadeOutSpeedMult 2.0;
+		StencilColor "FF0A0A";
+	}
+
+	States
+	{
+		Spawn:
+			CRRE B 0;
+			Goto Super::Spawn;
+	}
+}

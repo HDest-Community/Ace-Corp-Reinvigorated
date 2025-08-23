@@ -1,0 +1,108 @@
+class OldShieldSpell : OldArcanumSpell
+{
+	const ShieldPerLevel = 1000;
+	override int GetIndex() { return 20; }
+	override class<OldArcanumSpellTree> GetTree() { return 'OldArcanumTreeAlteration'; }
+	override string GetName() { return "Shield"; }
+	override int GetSpellType() { return SType_SelfOrMass | SType_Targeted; }
+	override int, int GetCastRequirements() { return 400, 0; }
+	override string GetDescription() { return String.Format("Target is surrounded with a shield that can absorb up to \c[Gold]%i\c- damage.", ShieldPerLevel * Level); }
+	override string GetTechnicalInfo() { return "Self, Targeted, Touch"; }
+	override int GetExperienceGain() { return 3; }
+	override class<OldArcanumSigil> GetSigil() { return 'OldShieldSigil'; }
+	override void DrawHudStuff(HDStatusBar sb, HDPlayerPawn hpl)
+	{
+		let Shield = hpl.FindInventory("OldArcanumShield");
+		if (Shield && Shield.Amount > 0)
+		{
+			sb.DrawRect(-33, -22, 2, 8);
+			sb.DrawRect(-31, -20, 2, 8);
+			sb.DrawRect(-29, -22, 2, 12);
+			sb.DrawRect(-27, -20, 2, 8);
+			sb.DrawRect(-25, -22, 2, 8);
+			sb.DrawWepNum(Shield.Amount, ShieldPerLevel * Level);
+		}
+	}
+}
+
+class OldShieldSigil : OldArcanumSigil
+{
+	override void ActivateTargeted()
+	{
+		let trgt = AimTarget();
+		if (trgt && trgt.Health > 0 && (trgt.bISMONSTER || trgt.player) && Distance3D(trgt) <= HDCONST_ONEMETRE * 2)
+		{
+			CastShield(trgt);
+		}
+	}
+
+	override void ActivateSelfOrMass()
+	{
+		if (master)
+		{
+			CastShield(master);
+		}
+	}
+
+	private void CastShield(Actor trgt)
+	{
+		trgt.A_StartSound("misc/mobshieldf", CHAN_BODY, CHANF_OVERLAP, 0.75);
+		for (int i = 0; i < 20; ++i)
+		{
+			vector3 RandPos = trgt.pos + (frandom(-trgt.radius, trgt.radius), frandom(-trgt.radius, trgt.radius), frandom(0, trgt.height));
+			actor Spark = Spawn("ShieldSpark", RandPos, ALLOW_REPLACE);
+			vector3 sv = Spark.Vec3To(trgt);
+			sv.z += trgt.height / 2;
+			Spark.vel = (sv / 50.0);
+		}
+		trgt.A_GiveInventory("OldArcanumShield");
+		let Shield = OldArcanumShield(trgt.FindInventory("OldArcanumShield"));
+		Shield.MaxAmount = 0; // [Ace] This is so that the shield gets destroyed when it depletes.
+		Shield.Stamina = OldShieldSpell.ShieldPerLevel * SigilLevel * 2;
+		Shield.Amount = OldShieldSpell.ShieldPerLevel * SigilLevel;
+	}
+
+	override void InitRuneSlots()
+	{
+		vector2 Size = (2.2, 3.666);
+		double X = 6.3, Y = 6.3;
+
+		CreateRuneSlot((X, Y), Size, 0.5);
+		CreateRuneSlot((X, -Y), Size, 0.5);
+		CreateRuneSlot((-X, -Y), Size, 0.5);
+		CreateRuneSlot((-X, Y), Size, 0.5);
+
+		Size = (3.5, 5.833);
+		X = 17; Y = 17;
+		CreateRuneSlot((0, Y), Size, 0.9);
+		CreateRuneSlot((X, 0), Size, 0.9);
+		CreateRuneSlot((0, -Y), Size, 0.9);
+		CreateRuneSlot((-X, 0), Size, 0.9);
+	}
+
+	Default
+	{
+		OldArcanumSigil.FadeOutSpeedMult 3.0;
+		StencilColor "5CFA6E";
+	}
+
+	States
+	{
+		Spawn:
+			CRAL C 0;
+			Goto Super::Spawn;
+	}
+}
+
+class OldArcanumShield : HDMagicShield
+{
+	Default
+	{
+		Inventory.MaxAmount 1000;
+		-QUICKTORETALIATE
+		+STANDSTILL
+		+INVENTORY.KEEPDEPLETED
+		-INVENTORY.INVBAR
+		HDDamageHandler.Priority 10001; // [Ace] Handle it before the regular shield.
+	}
+}
