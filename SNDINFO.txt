@@ -81,3 +81,9 @@ Arcanum/Conjuration/HolyForce "Sounds/Conjuration/HolyForce.wav"
 Arcanum/Conjuration/Barrier "Sounds/Conjuration/Barrier.wav"
 $alias Arcanum/Conjuration/Bridge Arcanum/Conjuration/Barrier
 Arcanum/Conjuration/Candlelight "Sounds/Conjuration/Candlelight.wav"
+
+// Teleporter
+HDOldTeleporter/Teleport HDTLPORT
+HDOldTeleporter/Button HDTLPBTN
+HDOldTeleporter/Safety HDTLPSFT
+HDOldTeleporter/Idle HDTLIDLE // [Ace] Unavailable atm.

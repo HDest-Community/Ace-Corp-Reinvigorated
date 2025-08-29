@@ -1,0 +1,3 @@
+AddKeySection "HD Teleporter" HDTeleporterKeys
+AddMenuKey "Use Old Teleporter" "use HDOldTeleporter"
+alias "listrifts" "netevent HDT_ListRifts"
