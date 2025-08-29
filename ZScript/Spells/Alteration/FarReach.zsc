@@ -1,0 +1,66 @@
+class OldFarReachSpell : OldArcanumSpell
+{
+	override int GetIndex() { return 0; }
+	override class<OldArcanumSpellTree> GetTree() { return 'OldArcanumTreeAlteration'; }
+	override string GetName() { return "Far Reach"; }
+	override int GetSpellType() { return SType_Targeted; }
+	override int, int GetCastRequirements() { return 40, 0; }
+	override string GetDescription() { return "Open doors, trigger switches, and pick up items within a range of 40m.\nDisarms ammo boxes.\n\n\c[Fire]You can launch yourself forward with this spell. Use with caution.\c-"; }
+	override string GetTechnicalInfo() { return "Targeted"; }
+	override int GetMaxLevel() { return 1; }
+	override class<OldArcanumSigil> GetSigil() { return 'OldFarReachSigil'; }
+}
+
+class OldFarReachSigil : OldArcanumSigil
+{
+	override void ActivateTargeted()
+	{
+		FLineTraceData data;
+		LineTrace(angle, HDCONST_ONEMETRE * 40, pitch, TRF_SOLIDACTORS | TRF_THRUSPECIES, 0, 0, 0, data);
+
+		if (data.HitLine && data.HitLine.Activate(master, 0, SPAC_Use))
+		{
+			PlayCastSound(self, "Arcanum/Alteration/FarReach");
+		}
+
+		if (data.HitActor && data.HitActor.Mass < 20000)
+		{
+			PlayCastSound(self, "Arcanum/Alteration/FarReach");
+
+			if (data.HitActor != master)
+			{
+				GrabThinker.Grab(master, data.HitActor);
+				if (data.HitActor is 'HDAmBox')
+				{
+					HDAmBox(data.HitActor).disarmed = true;
+				}
+			}
+			else
+			{
+				master.angle = angle;
+				master.pitch = pitch;
+				master.A_ChangeVelocity(40 * cos(pitch), 0, 40 * sin(-pitch), CVF_RELATIVE);
+				master.DamageMobj(master, master, 20, 'Internal');
+				HDPlayerPawn(master).lastvel = master.vel;
+			}
+		}
+	}
+
+	override void InitRuneSlots()
+	{
+		CreateRuneSlot((0, 0), (6, 10), 2.1);
+	}
+
+	Default
+	{
+		OldArcanumSigil.FadeOutSpeedMult 4.0;
+		StencilColor "FFFF99";
+	}
+
+	States
+	{
+		Spawn:
+			CRAL A 0;
+			Goto Super::Spawn;
+	}
+}

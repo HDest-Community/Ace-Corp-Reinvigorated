@@ -272,4 +272,19 @@ Sprite "WLLTA0", 28, 24
 	Patch "RICH", 0, 0
 }
 
+Sprite "ARBRA0", 150, 130
+{
+	Offset 75, 65
+	Patch "ARCBARR", 0, 0
+}
+
+Sprite "ARBRB0", 130, 150
+{
+	Offset 65, 75
+	Patch "ARCBARR", 0, 0
+	{
+		Rotate 90
+	}
+}
+
 // End of texture definitions

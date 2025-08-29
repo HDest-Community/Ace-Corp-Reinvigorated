@@ -1,0 +1,61 @@
+class OldArcanumHandler : EventHandler
+{
+	override void PlayerEntered(PlayerEvent e)
+	{
+		OldArcanumSpellBrain Brain = OldArcanumSpellBrain.Get(e.PlayerNumber);
+		Brain.InitSpells(); // [Ace] Because PostBeginPlay seems to be called a bit too late on it. In fact, it doesn't seem to be called at all.
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		let plr = HDPlayerPawn(players[e.Player].mo);
+		if (!plr)
+		{
+			return;
+		}
+
+		bool Alive = plr.Health > 0;
+		if (Alive && e.Name ~== "HDT_ListRifts")
+		{
+			static const string Directions[] = { "West", "South-West", "South", "South-East", "East", "North-East", "North", "North-West" };
+			int RiftCount = 0;
+			string RiftList = "";
+
+			ThinkerIterator it = ThinkerIterator.Create("HDOldTeleporterRift", Thinker.STAT_DEFAULT);
+			Actor a;
+			while ((a = Actor(it.Next())))
+			{
+				vector3 RiftPos = a.pos;
+				double Angle = (180 + plr.AngleTo(a) + 22.5) % 360;
+				int TotalSeconds = a.ReactionTime / 35 + random(0, 30);
+				int MinutesLeft = TotalSeconds / 60;
+				int SecondsLeft = TotalSeconds % 60;
+				RiftList = String.Format("%sRift at %i, %i, %i. Relative direction: %s. Estimated time until collapse: %i:%02i.\n", RiftList, RiftPos.x, RiftPos.y, RiftPos.z, Directions[int(Angle / 45)], MinutesLeft, SecondsLeft);
+				RiftCount++;
+			}
+			if (RiftCount > 0)
+			{
+				string FinalString = String.Format("There %s %i open rift%s:\n%s", (RiftCount > 1 ? "are" : "is"), RiftCount, (RiftCount > 1 ? "s" : ""), RiftList);
+				plr.A_Log(FinalString, true);
+			}
+			else
+			{
+				plr.A_Log("There are no open rifts.", true);
+			}
+		}
+		if (e.Name ~== "ARC_ReInitSpells")
+		{
+			OldArcanumSpellBrain Brain = OldArcanumSpellBrain.Get(e.Player);
+			Brain.InitSpells();
+		}
+	}
+}
+
+// --------------------------------------------------
+// DEBUG & MISC
+// --------------------------------------------------
+
+class OldArcanumMath
+{
+	const Pi = 3.14159;
+}

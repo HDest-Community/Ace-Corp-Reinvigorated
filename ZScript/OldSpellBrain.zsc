@@ -1,0 +1,76 @@
+class OldArcanumSpellBrain : Thinker
+{
+	void InitSpells()
+	{
+		for (int i = 0; i < AllClasses.Size(); ++i)
+		{
+			if (AllClasses[i] is 'OldArcanumSpell' && AllClasses[i].GetClassName() != 'OldArcanumSpell')
+			{
+				OldArcanumSpell Spell = OldArcanumSpell(new(AllClasses[i]));
+				Spell.Level = 1;
+
+				int TreesSize = Trees.Size();
+				int TreeIndex = TreesSize;
+				for (int j = 0; j < TreesSize; ++j)
+				{
+					if (Trees[j].GetClass() == Spell.GetTree())
+					{
+						TreeIndex = j;
+						break;
+					}
+				}
+
+				if (TreeIndex == Trees.Size()) // [Ace] Brand new tree, never used.
+				{
+					OldArcanumSpellTree Tree = OldArcanumSpellTree(new(Spell.GetTree()));
+					Tree.Spells.Push(Spell);
+					Trees.Push(Tree);
+				}
+				else
+				{
+					// [Ace] Don't duplicate spells.
+					if (!Trees[TreeIndex].SpellExists(Spell.GetClass()))
+					{
+						Trees[TreeIndex].InsertSpell(Spell);
+					}
+				}
+			}
+		}
+	}
+
+	static OldArcanumSpellBrain Get(int num)
+	{
+		ThinkerIterator it = ThinkerIterator.Create('OldArcanumSpellBrain', STAT_STATIC);
+		OldArcanumSpellBrain Brain;
+		while ((Brain = OldArcanumSpellBrain(it.Next())))
+		{
+			if (Brain.TrackedPlayer == num)
+			{
+				return Brain;
+			}
+		}
+
+		// [Ace] Create a new one if none exist.
+		Brain = new('OldArcanumSpellBrain');
+		Brain.ChangeStatNum(Thinker.STAT_STATIC);
+		Brain.TrackedPlayer = num;
+		return Brain;
+	}
+
+	int SpellCountInTree(class<OldArcanumSpellTree> tree)
+	{
+		for (int i = 0; i < Trees.Size(); ++i)
+		{
+			if (Trees[i].GetClass() == tree)
+			{
+				return Trees[i].Spells.Size();
+			}
+		}
+
+		return 0;
+	}
+
+	Array<OldArcanumSpellTree> Trees;
+
+	int TrackedPlayer;
+}

@@ -1,4 +1,7 @@
 user bool psg_invert = false;
+server bool oldarcanum_debug = false;
+user int oldarcanum_invert = 0;
+user bool oldarcanum_zoomhold = false;
 
 // HDCINFO CVars
 
@@ -18,3 +21,5 @@ server bool acriv_merch_greenline = true;
 server bool acriv_merch_modest = true;
 server bool acriv_merch_pzg = true;
 server bool acriv_merch_hindsight = true;
+server bool hdm_enable_riftgrenade = true;
+server bool hdm_enable_oldarcanum = true;

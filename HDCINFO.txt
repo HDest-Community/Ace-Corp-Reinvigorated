@@ -12,6 +12,12 @@ addSpawnTableSingleEntry => { "tableName": "SuperShotgunReplaces", "name": "HDGr
 // Old PSG
 addSpawnTableSingleEntry => { "tableName": "BlueArmorReplaces", "name": "OldPsgRandom", "weight": "#oldpsg_spawn_bias", "persists": "#oldpsg_spawn_persistency" }
 
+// Old Teleporter
+addSpawnTableSingleEntry => { "tableName": "CellPackReplaces", "name": "RiftGrenadeStack", "weight": "#oldtele_spawn_bias", "persists": "#oldtele_spawn_persistency" }
+
+// Old Arcanum
+addSpawnTableSingleEntry => { "tableName": "ChainsawReplaces", "name": "OldArcanumTome", "weight": "#oldbook_spawn_bias", "persists": "#oldtele_spawn_persistency" }
+
 // AMMO CLASSIFICATION
 addAmmoUser => { "ammoName": "HDBattery", "name": "HDGreenline" }
 addAmmoUser => { "ammoName": "HDBattery", "name": "HDOldPersonalShieldGenerator" }
@@ -34,3 +40,7 @@ newMerchantStoreItem => { "enabled": "#acriv_merch_pzg", "type": "item", "catego
 newMerchantStoreItem => { "enabled": "#acriv_merch_hindsight", "type": "item", "category": "$ACRIV_CAT", "item": "HDOldRearviewMirror", "icon": "RVMGZ0", "displayName": "$TAG_REARWARDMIRROR", "basePrice": "69", "flavorText": "$ACRIVFLAVOR_HINDSIGHT" }
 
 newMerchantStoreItem => { "enabled": "#acriv_merch_modest", "type": "mag", "category": "$ACRIV_CAT", "item": "HDOldMajesticMag", "icon": "OMJMA0", "displayName": "$TAG_MODESTMAG", "basePrice": "7", "flavorText": "$ACRIVFLAVOR_MODESTMAG" }
+
+newMerchantStoreItem => { "enabled": "#hdm_enable_riftgrenade", "type": "ammo", "category": "$MERCH_CAT_RIFTGRENADE", "item": "HDRiftGrenadeAmmo", "icon": "RFTGA0", "displayName": "$MERCH_TAG_RIFTGRENADE", "basePrice": "85", "flavorText": "$MERCH_FLAVOR_RIFTGRENADE" }
+
+newMerchantStoreItem => { "enabled": "#hdm_enable_oldarcanum", "type": "weapon", "category": "$MERCH_CAT_OLDARCANUM", "item": "HDArcanumTome", "icon": "ARCTZ0", "displayName": "$MERCH_TAG_OLDARCANUM", "basePrice": "850", "flavorText": "$MERCH_FLAVOR_OLDARCANUM" }

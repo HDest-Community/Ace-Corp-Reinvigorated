@@ -1,0 +1,149 @@
+#include "zscript/Spells/Destruction/Fireball.zsc"
+#include "zscript/Spells/Destruction/Claymore.zsc"
+#include "zscript/Spells/Destruction/Thunderclap.zsc"
+#include "zscript/Spells/Destruction/Hammerfist.zsc"
+#include "zscript/Spells/Destruction/Immolation.zsc"
+#include "zscript/Spells/Destruction/Voidstorm.zsc"
+
+#include "zscript/Spells/Restoration/Convalescence.zsc"
+#include "zscript/Spells/Restoration/LifeForce.zsc"
+#include "zscript/Spells/Restoration/Rage.zsc"
+#include "zscript/Spells/Restoration/Resurrect.zsc"
+#include "zscript/Spells/Restoration/Revitalization.zsc"
+#include "zscript/Spells/Restoration/Invulnerability.zsc"
+
+#include "zscript/Spells/Alteration/FarReach.zsc"
+#include "zscript/Spells/Alteration/Worldbreaker.zsc"
+#include "zscript/Spells/Alteration/Shield.zsc"
+#include "zscript/Spells/Alteration/Haste.zsc"
+#include "zscript/Spells/Alteration/HoradricMalus.zsc"
+#include "zscript/Spells/Alteration/Feather.zsc"
+#include "zscript/Spells/Alteration/Reenergize.zsc"
+#include "zscript/Spells/Alteration/Displacement.zsc"
+#include "zscript/Spells/Alteration/StoneFlesh.zsc"
+#include "zscript/Spells/Alteration/MassRecall.zsc"
+
+#include "zscript/Spells/Conjuration/GhostSquad.zsc"
+#include "zscript/Spells/Conjuration/HolyForce.zsc"
+#include "zscript/Spells/Conjuration/Barrier.zsc"
+#include "zscript/Spells/Conjuration/Bridge.zsc"
+#include "zscript/Spells/Conjuration/Candlelight.zsc"
+
+class OldArcanumSpellTree abstract play
+{
+	abstract string GetName() const;
+	abstract string GetDescription() const;
+	Array<OldArcanumSpell> Spells;
+
+	void InsertSpell(OldArcanumSpell spl)
+	{
+		int InsIndex = 0;
+		int SpellsCount = Spells.Size();
+		if (SpellsCount > 0)
+		{
+			for (int i = 0; i < SpellsCount; ++i)
+			{
+				if (spl.GetIndex() >= Spells[i].GetIndex())
+				{
+					InsIndex = i + 1;
+				}
+				else
+				{
+					InsIndex = i;
+					break;
+				}
+			}
+		}
+		Spells.Insert(InsIndex, spl);
+	}
+
+	bool SpellExists(class<OldArcanumSpell> spell)
+	{
+		for (int i = 0; i < Spells.Size(); ++i)
+		{
+			if (Spells[i].GetClass() == spell)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+class OldArcanumTreeDestruction : OldArcanumSpellTree
+{
+	override string GetName() { return "\c[Red]Destruction\c-"; }
+	override string GetDescription() { return "Those who wish to destroy the world may find out how trivial it is. But is it really what you want?\n\nThis tree contains spells to call down thunder, annihilate entire hordes, or light a candle."; }
+}
+
+class OldArcanumTreeRestoration : OldArcanumSpellTree
+{
+	override string GetName() { return "\c[Tan]Restoration\c-"; }
+	override string GetDescription() { return "It is a wise man's goal to heal the world.\n\nRestoration spells give you the ability to resurrect friends or foes, heal their wounds, cleanse their body, and protect it."; }
+}
+
+class OldArcanumTreeAlteration : OldArcanumSpellTree
+{
+	override string GetName() { return "\c[Green]Alteration\c-"; }
+	override string GetDescription() { return "Nothing is as it appears. Manipulate the world to your liking.\n\nThe school of Alteration lets you destroy entire walls or otherwise manipulate objects."; }
+}
+
+class OldArcanumTreeConjuration : OldArcanumSpellTree
+{
+	override string GetName() { return "\c[Purple]Conjuration\c-"; }
+	override string GetDescription() { return "If it does not exist, make it.\n\nConjuration is for the strongest of magi. With it, you can summon monsters or materialize objects."; }
+}
+
+class OldArcanumSpell abstract play
+{
+	enum SType
+	{
+		SType_SelfOrMass = 1,
+		SType_Targeted = 2
+	}
+
+	static const int ExperienceReqs[] = { 100, 200 }; // [Ace] Pulled these out my ass. Probably gonna need rebalancing.
+
+	abstract class<OldArcanumSpellTree> GetTree() const;
+	abstract int GetIndex() const;
+	abstract string GetName() const;
+	abstract int GetSpellType() const;
+	abstract int, int GetCastRequirements() const; // [Ace] Returns: blood, blues.
+	abstract ui string GetDescription() const;
+	abstract ui string GetTechnicalInfo() const;
+	virtual int GetExperienceGain() const { return 1; }
+	virtual int GetMaxLevel() const { return ExperienceReqs.Size() + 1; }
+	abstract class<OldArcanumSigil> GetSigil() const;
+	virtual ui string, class<Powerup> GetIndicatorInfo() const { return "", null; }
+	virtual ui void DrawHudStuff(HDStatusBar sb, HDPlayerPawn hpl) { }
+
+	// [Ace] Returns whether or not the spell leveled up.
+	bool GainExperience()
+	{
+		if (Level >= min(GetMaxLevel(), ExperienceReqs.Size() + 1))
+		{
+			return false;
+		}
+
+		Experience += int(ceil(GetExperienceGain() * (multiplayer ? 1.5 : 1.0)));
+		if (Experience >= ExperienceReqs[Level - 1])
+		{
+			Experience -= ExperienceReqs[Level - 1];
+			Level++;
+			return true;
+		}
+
+		return false;
+	}
+
+	int Experience;
+	int Level;
+}
+
+class OldArcanumIndicator ui
+{
+	string Icon;
+	Vector2 Pos;
+	Color Col;
+}
