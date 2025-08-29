@@ -18,3 +18,13 @@ ACRIVFLAVOR_PZG = "Don't look too hard at the label. Still works perfectly fine.
 ACRIVFLAVOR_HINDSIGHT = "Forethought not included.";
 
 ACRIVFLAVOR_MODESTMAG = "Not so Majestic now, aye?";
+
+// Impact Grenade
+MERCH_CAT_RIFTGRENADE           = "AceCorp";
+MERCH_TAG_RIFTGRENADE           = "Rift Grenade";
+MERCH_FLAVOR_RIFTGRENADE        = "Open god knows what wherever you please! Now only 84.99! Teleporter not included.";
+
+// Arcanum
+MERCH_CAT_OLDARCANUM            = "AceCorp";
+MERCH_TAG_OLDARCANUM            = "Arcanum Tome";
+MERCH_FLAVOR_OLDARCANUM         = "I still don't understand a damn thing in this and now it's eating my blood!";
