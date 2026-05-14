@@ -47,14 +47,23 @@ class OldHoradricMalusSigil : OldArcanumSigil
 			if (arm)
 			{
 				TryPlaySound();
-				int maxDurability = arm.Mega ? 70 : 144;
-				if (arm.GetClassName() == 'HHelmetWorn')
-				{
-					maxDurability = 72;
-				}
-				else if (arm.GetClassName() == 'HDHEVArmourWorn')
-				{
-					maxDurability = 107;
+				int maxDurability;
+				switch (arm.getClassName()) {
+					// case 'GarrisonArmourWorn':
+					// 	maxDurability = 144;
+					// 	break;
+					case 'BattleArmourWorn':
+						maxDurability = 70;
+						break;
+					case 'HHelmetWorn':
+						maxDurability = 72;
+						break;
+					case 'HDHEVArmourWorn':
+						maxDurability = 107;
+						break;
+					default:
+						maxDurability = 144;
+						break;
 				}
 				int missing = maxDurability - arm.Durability;
 				arm.Durability += int(missing * (0.35 + 0.15 * SigilLevel));
