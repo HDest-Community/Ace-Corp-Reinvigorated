@@ -24,9 +24,9 @@ addAmmoUser => { "ammoName": "HDBattery", "name": "HDOldPersonalShieldGenerator"
 addAmmoUser => { "ammoName": "HD500SWLightAmmo", "name": "HDOldMajestic" }
 
 // BACKPACK FILTERING
-addBPSpawnPoolFilter => { "name": "HDOldMajestic", "allowed": "#oldmaj_allowBackpacks" }
-addBPSpawnPoolFilter => { "name": "HDGreenline", "allowed": "#oldrdl_allowBackpacks" }
-addBPSpawnPoolFilter => { "name": "HDOldPersonalShieldGenerator", "allowed": "#oldpsg_allowBackpacks" }
+addStorageItemListFilter => { "name": "HDOldMajestic", "allowed": "#oldmaj_allowBackpacks" }
+addStorageItemListFilter => { "name": "HDGreenline", "allowed": "#oldrdl_allowBackpacks" }
+addStorageItemListFilter => { "name": "HDOldPersonalShieldGenerator", "allowed": "#oldpsg_allowBackpacks" }
 
 // WEAPON CRATE FILTERING
 addWeaponCrateFilter => { "name": "HDOldMajestic", "allowed": "#oldmaj_allowBackpacks" }
