@@ -50,12 +50,3 @@ class OldArcanumHandler : EventHandler
 		}
 	}
 }
-
-// --------------------------------------------------
-// DEBUG & MISC
-// --------------------------------------------------
-
-class OldArcanumMath
-{
-	const Pi = 3.14159;
-}

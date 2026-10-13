@@ -25,7 +25,7 @@ class OldArcanumSigil : HDActor abstract
 		Actor a; bool success;
 		double sinp = sin(pitch);
 		double cosp = cos(pitch);
-		double Extra = (abs(pitch) != 90 ? (pitch > 0 ? OldArcanumMath.Pi * cosp : (pitch < 0 ? -OldArcanumMath.Pi * sinp : 0)) : 0);
+		double Extra = (abs(pitch) != 90 ? (pitch > 0 ? M_PI * cosp : (pitch < 0 ? -M_PI * sinp : 0)) : 0);
 		[success, a] = A_SpawnItemEx("OldArcanumRuneSlot", offcenter.y * sin(pitch - Extra), offcenter.x, offcenter.y * (cos(pitch - Extra) / Stretch), flags: SXF_NOCHECKPOSITION | SXF_SETMASTER | SXF_TRANSFERSTENCILCOL | SXF_TRANSFERPITCH);
 		if (success)
 		{
