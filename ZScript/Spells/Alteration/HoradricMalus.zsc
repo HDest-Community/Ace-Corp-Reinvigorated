@@ -110,8 +110,8 @@ class OldHoradricMalusSigil : OldArcanumSigil
 					case 'HDDeployableBarricade':
 					{
 						TryPlaySound();
-						int HealthMissing = pkp.default.Health - pkp.Health;
-						pkp.Health += int(HealthMissing * (0.35 + 0.15 * SigilLevel));
+						int missing = pkp.default.Health - pkp.Health;
+						pkp.Health += int(missing * (0.35 + 0.15 * SigilLevel));
 						break;
 					}
 				}

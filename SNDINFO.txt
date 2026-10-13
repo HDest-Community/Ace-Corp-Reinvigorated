@@ -1,4 +1,4 @@
-// Redline
+// Greenline
 Greenline/Fire GDLNFIRE
 $pitchset Greenline/Fire 0.9;
 
@@ -87,3 +87,18 @@ HDOldTeleporter/Teleport HDTLPORT
 HDOldTeleporter/Button HDTLPBTN
 HDOldTeleporter/Safety HDTLPSFT
 HDOldTeleporter/Idle HDTLIDLE // [Ace] Unavailable atm.
+
+// Blueline
+Blueline/Fire BDLNFIRE
+Blueline/Impact BDLNHIT
+$limit Blueline/Impact 0
+
+Blueline/BoltBack BDBOLTBK
+Blueline/BoltFwd BDBOLTFW
+Blueline/CellIn BDCLLIN
+Blueline/CellOut BDCLLOUT
+Blueline/Eject BDEJECT
+Blueline/Overload BDOVERLD
+Blueline/Charge BDBOLTCH
+$alias Blueline/Overheated Blueline/Charge
+Blueline/Revving BDENGREV
